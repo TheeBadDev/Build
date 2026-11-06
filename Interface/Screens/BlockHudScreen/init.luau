@@ -36,9 +36,20 @@ function BlockHud.new(Screen: ScreenGui, BlockFrame: Frame, ToolFrame: Frame): I
 	return self
 end
 
+
+
 function BlockHud.Execute(self: Interface)
 	const startingBlocks = BlockHudEvents.Equipped:InvokeServer()
-	BlockFrame(self._MAID,self.BlockFrame,startingBlocks)
+	
+	local function selectCallback(...)
+		BlockHudEvents.Select:Fire(...)
+	end
+	
+	BlockFrame(self._MAID,{
+    	BlockFrame = self.BlockFrame,
+		BlockList = startingBlocks,
+		Callback = selectCallback
+	})
 end
 
 function BlockHud.Destroy(self: Interface)

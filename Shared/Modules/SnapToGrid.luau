@@ -5,6 +5,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local CellSize: Vector3Value = ReplicatedStorage:WaitForChild("Configs"):WaitForChild("GidConfig"):WaitForChild("CellSize")
 
+local HALF = 0.5
+
 local function SnapAxis(value: number, cell: number): number
 	if cell <= 0 then
 		return value
@@ -58,8 +60,15 @@ local function SnapInstance(instance: PVInstance): Vector3
 	return snapped
 end
 
+-- Moves the block into the grid cell next to the surface at position, pushed out along the surface normal
+local function SnapOnSurface(block: BasePart, position: Vector3, normal: Vector3): Vector3
+	block.Position = position + normal * (block.Size * HALF)
+	return SnapInstance(block)
+end
+
 
 return {
 	Instance = SnapInstance,
 	Position = SnapPosition,
+	OnSurface = SnapOnSurface,
 }

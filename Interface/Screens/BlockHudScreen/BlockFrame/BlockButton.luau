@@ -1,10 +1,15 @@
 const ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 const Maid = require(ReplicatedStorage.Shared.Libraries.Maid)
+const Throttle = require(ReplicatedStorage.Shared.Libraries.Throttle)
 const BlockUtil = require(ReplicatedStorage.Shared.Utils.BlockUtil)
 
 const ItemViewport = require(ReplicatedStorage.Interface.Components.ItemViewport)
 const Find = require(ReplicatedStorage.Interface.Modules.Find)
+
+
+const PRESS_DEBOUNCE_SECONDS = 0.2
+
 
 export type Props = {
     Frame: Frame,
@@ -20,6 +25,8 @@ return function(maid: Maid.Type, props: Props)
     maid[`viewportFrame{props.Frame.Name}`] = ItemViewport(props.Frame, BlockUtil.FindBlock(props.BlockName))
 
     maid[`button{props.Frame.Name}`] = button.Activated:Connect(function()
-        props.OnPressed(props.BlockName)
+        Throttle(button, PRESS_DEBOUNCE_SECONDS, function()
+            props.OnPressed(props.BlockName)
+        end)
     end)
 end

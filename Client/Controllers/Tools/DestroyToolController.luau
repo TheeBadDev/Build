@@ -22,12 +22,13 @@ const BlockEvents = game.ReplicatedStorage.Events.BlockEvents
 
 
 const DELAY = 0.2
+const SELECTION_COLOR = Color3.new(1, 0, 0)
 
 
 local function activated(tool: Tool)
 	const rayCastResult = Mouse.Raycast()
 
-	if not RaycastUtil.HitInsatnce(rayCastResult) then return end
+	if not RaycastUtil.HitInstance(rayCastResult) then return end
 	if not ObjectUtil.CanDestroy(rayCastResult.Instance) then return end
 	
 	BlockEvents.DestroyBlock:FireServer(rayCastResult.Instance)
@@ -39,9 +40,8 @@ local function unequipped()
 end
 
 local function equipped()
-	const selectionPart, selectionBox = SelectionBox()
+	const selectionPart = SelectionBox({ Color3 = SELECTION_COLOR })
 	selectionPart.Parent = workspace
-	selectionBox.Color3 = Color3.new(1, 0, 0)
 	
 	_Maid['SelectionPart'] = selectionPart
 	
@@ -50,7 +50,7 @@ local function equipped()
 	_Maid['RS'] = RunService.PostSimulation:Connect(function()
 		const rayCastResult = Mouse.Raycast()
 		
-		if not RaycastUtil.HitInsatnce(rayCastResult) then return end
+		if not RaycastUtil.HitInstance(rayCastResult) then return end
 		if lastTarget and lastTarget == rayCastResult.Instance then return end
 		if not ObjectUtil.CanDestroy(rayCastResult.Instance) then return end
 		

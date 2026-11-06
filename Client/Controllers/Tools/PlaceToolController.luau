@@ -24,7 +24,7 @@ const DELAY = 0.2
 
 local function activated(tool: Tool)
 	const rayCastResults = Mouse.Raycast()
-	if not RaycastUtil.HitInsatnce(rayCastResults) then return end
+	if not RaycastUtil.HitInstance(rayCastResults) then return end
 	
 	BlockEvents.Place:FireServer(tool,rayCastResults.Position,rayCastResults.Normal)
 end
@@ -47,7 +47,7 @@ local function equipped(tool: Tool)
 	_Maid['Runservice'] = RunService.Heartbeat:Connect(function()
 		const rayCastResults = Mouse.Raycast()
 		
-		if not selectionBox or not RaycastUtil.HitInsatnce(rayCastResults) then return end
+		if not selectionBox or not RaycastUtil.HitInstance(rayCastResults) then return end
 		
 		selectionBox.Position = rayCastResults.Position - rayCastResults.Normal * (selectionBox.Size / 2)
 		SnapToGrid.Instance(selectionBox)

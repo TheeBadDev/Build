@@ -1,7 +1,7 @@
 
 
 
-local function RaycastHitInsatance(rayCastResults: RaycastResult): boolean
+local function RaycastHitInstance(rayCastResults: RaycastResult): boolean
 	if not rayCastResults then
 		return false
 	end
@@ -20,5 +20,5 @@ end
 
 
 return {
-	HitInsatnce = RaycastHitInsatance,
+	HitInstance = RaycastHitInstance,
 }
